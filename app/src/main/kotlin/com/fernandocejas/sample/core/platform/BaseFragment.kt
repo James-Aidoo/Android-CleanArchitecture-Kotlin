@@ -66,7 +66,7 @@ abstract class BaseFragment : Fragment() {
         action: () -> Any
     ) {
         val snackBar = Snackbar.make(viewContainer, message, Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction(actionText) { _ -> action.invoke() }
+        snackBar.setAction(actionText) { action.invoke() }
         snackBar.setActionTextColor(ContextCompat.getColor(appContext, color.colorTextPrimary))
         snackBar.show()
     }
