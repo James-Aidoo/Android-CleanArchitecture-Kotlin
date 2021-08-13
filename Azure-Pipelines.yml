@@ -1,0 +1,59 @@
+# Variable 'KeyAlias' was defined in the Variables tab
+# Variable 'KeyPassword' was defined in the Variables tab
+trigger:
+  branches:
+    include:
+    - feature/my_changes
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: feature/my_changes
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-20.04
+  steps:
+  - checkout: self
+    clean: true
+  - task: Gradle@2
+    displayName: gradlew build
+    inputs:
+      workingDirectory: ''
+      gradleWrapperFile: 'gradlew'
+      publishJUnitResults: false
+      tasks: assembleRelease
+  - task: AndroidSigning@3
+    displayName: Signing and aligning APK file(s) **/*.apk
+    inputs:
+      keystoreFile: 473b86d3-516a-4115-950c-7b0aea1462e0
+      keystorePass: $(KeyPassword)
+      keystoreAlias: $(KeyAlias)
+      keyPass: $(KeyPassword)
+      apkSignerArguments: '--verbose'
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    condition: succeededOrFailed()
+    inputs:
+      SourceFolder: $(system.defaultworkingdirectory)
+      Contents: '**/*.apk'
+      TargetFolder: $(build.artifactstagingdirectory)
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publishing Build Artifacts'
+    continueOnError: false
+    inputs:
+      pathToPublish: $(build.artifactstagingdirectory)
+      artifactName: '**/*.apk'
+  - task: AppCenterDistribute@3
+    displayName: Deploy $(build.artifactstagingdirectory) to Visual Studio App Center
+    inputs:
+      serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
+      appSlug: https://appcenter.ms/users/James_Aidoo/apps/Azure-Pipeline-AppCenter-Integration
+      app: $(System.ArtifactsDirectory)
+      symbolsType: Android
+      packParentFolder: false
+      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
+      isSilent: false
+...
