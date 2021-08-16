@@ -65,7 +65,7 @@ jobs:
 
 #  - ${{ each apkFile in ${{build.artifactstagingdirectory}} }}:
   - task: AppCenterDistribute@3
-    displayName: Deploy ${{apkFile}} to Visual Studio App Center
+    displayName: Deploy dev release apk to Visual Studio App Center
     inputs:
       serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
       appSlug: https://appcenter.ms/users/James_Aidoo/apps/Azure-Pipeline-AppCenter-Integration
