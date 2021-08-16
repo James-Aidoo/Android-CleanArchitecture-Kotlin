@@ -45,26 +45,28 @@ jobs:
     continueOnError: false
     inputs:
       pathToPublish: $(build.artifactstagingdirectory)
-      artifactName: '**/*.apk'
+      artifactName: 'outputs'
+      artifactType: 'container'
 
 #  - task: AppCenterDistribute@3
 #    displayName: Deploy $(build.artifactstagingdirectory) to Visual Studio App Center
 #    inputs:
 #      serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
-#      appSlug: https://appcenter.ms/users/James_Aidoo/apps/Azure-Pipeline-AppCenter-Integration
-#      app: $(System.ArtifactsDirectory)
+#      appSlug: James_Aidoo/Azure-Pipeline-AppCenter-Integration
+#      app: $(build.artifactstagingdirectory)
 #      symbolsType: Android
-#      packParentFolder: false
+#      packParentFolder: true
 #      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
+      destinationType: groups
 #      isSilent: false
 
-  - ${{ each apkFile in $(build.artifactstagingdirectory) }}
+  - ${{ each apkFile in $(build.artifactstagingdirectory) }}:
     - task: AppCenterDistribute@3
-      displayName: Deploy $(build.artifactstagingdirectory) to Visual Studio App Center
+      displayName: Deploy ${{apkFile}} to Visual Studio App Center
       inputs:
         serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
         appSlug: https://appcenter.ms/users/James_Aidoo/apps/Azure-Pipeline-AppCenter-Integration
-        app: apkFile
+        app: ${{apkFile}}
         symbolsType: Android
         packParentFolder: false
         releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
