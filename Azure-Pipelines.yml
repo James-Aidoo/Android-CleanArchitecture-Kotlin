@@ -68,7 +68,7 @@ jobs:
     displayName: Deploy dev release apk to Visual Studio App Center
     inputs:
       serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
-      appSlug: https://appcenter.ms/users/James_Aidoo/apps/Azure-Pipeline-AppCenter-Integration
+      appSlug: James_Aidoo/Azure-Pipeline-AppCenter-Integration
       app: $(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-dev-release-unsigned.apk
       symbolsType: Android
       packParentFolder: false
