@@ -59,9 +59,7 @@ jobs:
 #      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
 #      isSilent: false
 
-  - script: |
-      apkFilesInDir=ls $(build.artifactstagingdirectory)
-  - ${{ each apkFile in apkFilesInDir }}:
+  - ${{ each apkFile in ${{build.artifactstagingdirectory}} }}:
     - task: AppCenterDistribute@3
       displayName: Deploy ${{apkFile}} to Visual Studio App Center
       inputs:
