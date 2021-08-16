@@ -45,7 +45,7 @@ jobs:
     continueOnError: false
     inputs:
       pathToPublish: $(build.artifactstagingdirectory)
-      artifactName: ''
+      artifactName: 'test'
   - task: AppCenterDistribute@3
     displayName: Deploy $(build.artifactstagingdirectory) to Visual Studio App Center
     inputs:
