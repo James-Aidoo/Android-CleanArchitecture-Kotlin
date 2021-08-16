@@ -59,20 +59,24 @@ jobs:
 #      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
 #      isSilent: false
 
-#  - template: appcenter_deploy_template.yml
-#    parameters:
-#      listOfApks: $(build.artifactstagingdirectory)
+  - template: appcenter_deploy_template.yml
+    parameters:
+      listOfApks: [
+          "$(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-dev-release-unsigned.apk",
+          "$(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-internal-release-unsigned.apk",
+          "$(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-public-release-unsigned.apk"
+      ]
 
 #  - ${{ each apkFile in ${{build.artifactstagingdirectory}} }}:
-  - task: AppCenterDistribute@3
-    displayName: Deploy dev release apk to Visual Studio App Center
-    inputs:
-      serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
-      appSlug: James_Aidoo/Azure-Pipeline-AppCenter-Integration
-      app: $(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-dev-release-unsigned.apk
-      symbolsType: Android
-      packParentFolder: false
-      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
-      destinationType: groups
-      isSilent: false
+#  - task: AppCenterDistribute@3
+#    displayName: Deploy dev release apk to Visual Studio App Center
+#    inputs:
+#      serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
+#      appSlug: James_Aidoo/Azure-Pipeline-AppCenter-Integration
+#      app: $(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-dev-release-unsigned.apk
+#      symbolsType: Android
+#      packParentFolder: false
+#      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
+#      destinationType: groups
+#      isSilent: false
 ...
