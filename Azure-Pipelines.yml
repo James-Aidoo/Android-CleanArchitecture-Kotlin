@@ -69,7 +69,7 @@ jobs:
     inputs:
       serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
       appSlug: https://appcenter.ms/users/James_Aidoo/apps/Azure-Pipeline-AppCenter-Integration
-      app: $(build.artifactstagingdirectory)/app-dev-release-unsigned.apk
+      app: $(build.artifactstagingdirectory)/app/build/outputs/apk/dev/release/app-dev-release-unsigned.apk
       symbolsType: Android
       packParentFolder: false
       releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
