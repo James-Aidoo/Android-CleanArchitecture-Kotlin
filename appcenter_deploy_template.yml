@@ -6,7 +6,7 @@ parameters:
 steps:
   - ${{ each apk in parameters.listOfApks }}:
     - task: AppCenterDistribute@3
-        displayName: Deploy ${{ apk }} to Visual Studio App Center
+        displayName: Deploy apk to Visual Studio App Center
         inputs:
           serverEndpoint: 133b25af-78fa-4e02-b514-d36bb5a93d72
           appSlug: James_Aidoo/Azure-Pipeline-AppCenter-Integration
