@@ -57,10 +57,10 @@ jobs:
 #      symbolsType: Android
 #      packParentFolder: true
 #      releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
-      destinationType: groups
 #      isSilent: false
 
-  - ${{ each apkFile in $(build.artifactstagingdirectory) }}:
+  - script: apkFilesInDir=ls $(build.artifactstagingdirectory)
+  - ${{ each apkFile in apkFilesInDir }}:
     - task: AppCenterDistribute@3
       displayName: Deploy ${{apkFile}} to Visual Studio App Center
       inputs:
@@ -70,5 +70,6 @@ jobs:
         symbolsType: Android
         packParentFolder: false
         releaseNotesInput: "Test Release Notes:\n\nIf you're seeing this, I succeeded in integrating the Visual Studio App Center Distribute Service to my Azure Pipeline on a project hosted on GitHub. Pretty impressive, huh!\n\n(Alright, fingers crossed this works \U0001F91E\U0001F3FD)"
+        destinationType: groups
         isSilent: false
 ...
